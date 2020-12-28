@@ -12,8 +12,8 @@ if (( $# > 0 )); then
     clang-format ${FORMAT_OPTS} "$@"
     echo "Running clang-tidy..."
     clang-tidy ${TIDY_OPTS} "$@" -- ${COMPILER_OPTS} &> /dev/null
-    echo "Adding missing final new lines..."
-    sed -i -e '$a\' "$@"
+    echo "Capitalizing hex numbers, adding missing final new lines..."
+    sed -i -e 's/0[xX]\([[:xdigit:]]*\)/0x\U\1\E/g' -e '$a\' "$@"
     echo "Done formatting file(s) $*"
     exit
 fi
